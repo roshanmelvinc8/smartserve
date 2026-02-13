@@ -103,7 +103,7 @@ app.use(bodyParser.json());
 
 // Serve static files from parent directory or public folder (HTML, CSS, JS)
 const publicPath = process.env.NODE_ENV === 'production' 
-  ? path.join(__dirname, '../public')
+  ? path.join(__dirname, 'public')
   : path.join(__dirname, '..');
 app.use(express.static(publicPath));
 
@@ -143,10 +143,10 @@ app.get('/health', (req, res) => {
 
 // Root route - serve login page
 app.get('/', (req, res) => {
-  const publicPath = process.env.NODE_ENV === 'production' 
-    ? path.join(__dirname, '../public/login.html')
+  const loginPath = process.env.NODE_ENV === 'production' 
+    ? path.join(__dirname, 'public', 'login.html')
     : path.join(__dirname, '..', 'login.html');
-  res.sendFile(publicPath);
+  res.sendFile(loginPath);
 });
 
 // Routes

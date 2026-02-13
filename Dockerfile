@@ -2,19 +2,17 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package.json files
+# Copy package.json
 COPY backend/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy backend source code
+# Copy all backend source code
 COPY backend/ ./
 
-# Create public directory for frontend files
+# Create public directory and copy frontend files
 RUN mkdir -p public
-
-# Copy frontend files to public directory
 COPY *.html public/
 COPY *.css public/
 COPY *.js public/

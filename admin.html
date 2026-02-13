@@ -12,6 +12,7 @@
         body {
             background: linear-gradient(135deg, #1d2671, #c33764);
             min-height: 100vh;
+            padding: 20px;
         }
 
         .card {
@@ -21,6 +22,54 @@
         .token {
             font-size: 2.5rem;
             font-weight: bold;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 20px !important;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .token {
+                font-size: 1.8rem;
+            }
+
+            .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem !important;
+            }
+
+            .card {
+                padding: 15px !important;
+            }
+
+            .token {
+                font-size: 1.5rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem !important;
+            }
+
+            .bg-primary, .bg-secondary, .bg-success {
+                padding: 15px !important;
+            }
         }
     </style>
 </head>

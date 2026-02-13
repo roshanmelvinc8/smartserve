@@ -2,16 +2,18 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #4facfe, #00f2fe);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .login-container {
     background: #fff;
     padding: 30px;
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     text-align: center;
@@ -74,4 +76,42 @@ button:hover {
     font-size: 13px;
     color: #007bff;
     cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+    }
+
+    .input-group label {
+        font-size: 13px;
+    }
+
+    .input-group input,
+    .role-group select {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    button {
+        padding: 12px !important;
+        font-size: 14px;
+    }
+
+    p {
+        font-size: 11px !important;
+    }
 }

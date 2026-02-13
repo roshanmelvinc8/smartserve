@@ -8,12 +8,13 @@
 
 /* Page background */
 body {
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(135deg, #4facfe, #00f2fe);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 /* Heading */
@@ -29,7 +30,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 280px;
+    width: 100%;
+    max-width: 280px;
 }
 
 /* Buttons */
@@ -56,4 +58,27 @@ body {
 /* Button click */
 .service-buttons button:active {
     transform: scale(0.98);
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .service1 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    .service-buttons {
+        width: 100%;
+        max-width: 100%;
+        gap: 12px;
+    }
+
+    .service-buttons button {
+        padding: 12px;
+        font-size: 14px;
+    }
 }

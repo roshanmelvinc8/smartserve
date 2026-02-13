@@ -12,6 +12,7 @@
         body {
             background: linear-gradient(135deg, #667eea, #764ba2);
             min-height: 100vh;
+            padding: 0;
         }
 
         .card {
@@ -22,6 +23,9 @@
             background-color: rgba(0, 0, 0, 0.3);
             padding: 1rem;
             margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
         .navbar-custom .btn-logout {
@@ -33,6 +37,59 @@
         .navbar-custom .btn-logout:hover {
             background-color: #ff4757;
             color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .navbar-custom {
+                padding: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .navbar-custom h4 {
+                font-size: 1.2rem !important;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .card {
+                padding: 20px !important;
+            }
+
+            .d-grid button {
+                font-size: 14px;
+                padding: 10px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-custom {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .navbar-custom h4 {
+                font-size: 1rem;
+                width: 100%;
+            }
+
+            .navbar-custom .btn-logout {
+                width: 100%;
+            }
+
+            .card {
+                margin: 0 10px;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>

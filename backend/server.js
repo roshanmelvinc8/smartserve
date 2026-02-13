@@ -101,8 +101,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve static files from parent directory (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, '..')));
+// Serve static files from parent directory or public folder (HTML, CSS, JS)
+const publicPath = process.env.NODE_ENV === 'production' 
+  ? path.join(__dirname, '../public')
+  : path.join(__dirname, '..');
+app.use(express.static(publicPath));
 
 // Attach mock DB to app
 app.db = new MockDatabase();
@@ -140,7 +143,10 @@ app.get('/health', (req, res) => {
 
 // Root route - serve login page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'login.html'));
+  const publicPath = process.env.NODE_ENV === 'production' 
+    ? path.join(__dirname, '../public/login.html')
+    : path.join(__dirname, '..', 'login.html');
+  res.sendFile(publicPath);
 });
 
 // Routes
@@ -157,7 +163,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-const HOST = '127.0.0.1';
+const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1';
 app.listen(PORT, HOST, () => {
   console.log(`SmartServe backend running on http://${HOST}:${PORT}`);
   console.log('Using in-memory mock database (install MongoDB for persistence)');

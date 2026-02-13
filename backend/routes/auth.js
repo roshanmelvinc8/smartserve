@@ -4,17 +4,26 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 router.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  const { username, userId, role } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ msg: 'email and password required' });
+  if (!username || !userId || !role) {
+    return res.status(400).json({ msg: 'username, userId, and role required' });
   }
 
-  const user = req.app.db.findUser({ email, password });
-
-  if (!user) {
-    return res.status(401).json({ msg: 'invalid credentials' });
+  // Validate role
+  if (!['student', 'staff', 'admin'].includes(role)) {
+    return res.status(400).json({ msg: 'invalid role' });
   }
+
+  // Create user object for JWT
+  const user = {
+    _id: username,
+    name: username,
+    username: username,
+    userId: userId,
+    role: role,
+    service: null
+  };
 
   const accessToken = jwt.sign(
     { role: user.role, service: user.service || null },
@@ -27,7 +36,8 @@ router.post('/login', (req, res) => {
     user: {
       _id: user._id,
       name: user.name,
-      email: user.email,
+      username: user.username,
+      userId: user.userId,
       role: user.role,
       service: user.service
     }

@@ -1,11 +1,12 @@
 document.getElementById("loginForm").addEventListener("submit", async function (e) {
-    e.preventDefault(); // stop page reload
+    e.preventDefault();
 
-    let email = document.getElementById("userId").value.trim();
-    let password = document.getElementById("password").value.trim();
+    let username = document.getElementById("userId").value.trim();
+    let userId = document.getElementById("password").value.trim();
+    let role = document.getElementById("role").value.trim();
 
-    if (email === "" || password === "") {
-        alert("Please enter email and password ❌");
+    if (username === "" || userId === "" || role === "") {
+        alert("Please fill all fields ❌");
         return;
     }
 
@@ -15,7 +16,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ username, userId, role })
         });
 
         const data = await response.json();
@@ -32,11 +33,11 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         alert("Login Successfully ✅");
 
         // Redirect based on role
-        if (data.user.role === "admin") {
+        if (role === "admin") {
             window.location.href = "admin.html";
-        } else if (data.user.role === "staff") {
+        } else if (role === "staff") {
             window.location.href = "staff.html";
-        } else if (data.user.role === "student") {
+        } else if (role === "student") {
             window.location.href = "next.html";
         }
     } catch (error) {

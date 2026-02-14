@@ -4,11 +4,10 @@ const { sendWhatsapp } = require('../utils/whatsapp');
 const router = express.Router();
 
 router.get('/service-tokens', verifyJWT, roleRequired('staff'), (req, res) => {
-  let service = req.user.service;
+  const service = req.user.service;
 
   if (!service) {
-    const staff = req.app.db.findUser({ _id: req.user.sub });
-    service = staff.service;
+    return res.status(400).json({ msg: 'service not assigned. please login with a service' });
   }
 
   const tokens = req.app.db
@@ -30,10 +29,9 @@ router.put('/update-status', verifyJWT, roleRequired('staff'), (req, res) => {
     return res.status(400).json({ msg: 'invalid status' });
   }
 
-  let service = req.user.service;
+  const service = req.user.service;
   if (!service) {
-    const staff = req.app.db.findUser({ _id: req.user.sub });
-    service = staff.service;
+    return res.status(400).json({ msg: 'service not assigned' });
   }
 
   const token = req.app.db.findToken({ _id: token_id, service });
@@ -52,10 +50,9 @@ router.put('/update-status', verifyJWT, roleRequired('staff'), (req, res) => {
 });
 
 router.put('/expire-tokens', verifyJWT, roleRequired('staff'), (req, res) => {
-  let service = req.user.service;
+  const service = req.user.service;
   if (!service) {
-    const staff = req.app.db.findUser({ _id: req.user.sub });
-    service = staff.service;
+    return res.status(400).json({ msg: 'service not assigned' });
   }
 
   const result = req.app.db.updateManyTokens(

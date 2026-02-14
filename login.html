@@ -25,7 +25,7 @@
 
         <div class="role-group">
             <label>Login As</label>
-            <select id="role" required>
+            <select id="role" required onchange="toggleServiceField()">
                 <option value="">Select Role</option>
                 <option value="student">Student</option>
                 <option value="staff">Staff</option>
@@ -33,10 +33,30 @@
             </select>
         </div>
 
+        <div class="role-group" id="serviceField" style="display: none;">
+            <label>Service</label>
+            <select id="service">
+                <option value="Bonafide">Bonafide Certificate</option>
+                <option value="Transfer">Transfer Certificate</option>
+                <option value="Fee">Fee Enquiry</option>
+            </select>
+        </div>
+
         <button type="submit">Login</button>
     </form>
 </div>
 
+<script>
+    function toggleServiceField() {
+        const role = document.getElementById("role").value;
+        const serviceField = document.getElementById("serviceField");
+        if (role === "staff") {
+            serviceField.style.display = "block";
+        } else {
+            serviceField.style.display = "none";
+        }
+    }
+</script>
 <script src="login.js"></script>
 
 </body>

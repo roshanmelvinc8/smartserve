@@ -4,19 +4,28 @@ document.getElementById("loginForm").addEventListener("submit", async function (
     let username = document.getElementById("userId").value.trim();
     let userId = document.getElementById("password").value.trim();
     let role = document.getElementById("role").value.trim();
+    let service = null;
 
     if (username === "" || userId === "" || role === "") {
         alert("Please fill all fields ❌");
         return;
     }
 
+    // For staff, include service selection
+    if (role === "staff") {
+        service = document.getElementById("service").value;
+    }
+
     try {
+        const body = { username, userId, role };
+        if (service) body.service = service;
+
         const response = await fetch("/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, userId, role })
+            body: JSON.stringify(body)
         });
 
         const data = await response.json();

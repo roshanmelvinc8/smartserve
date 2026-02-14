@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 router.post('/login', (req, res) => {
-  const { username, userId, role } = req.body;
+  const { username, userId, role, service } = req.body;
 
   if (!username || !userId || !role) {
     return res.status(400).json({ msg: 'username, userId, and role required' });
@@ -15,6 +15,11 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ msg: 'invalid role' });
   }
 
+  // Validate service for staff
+  if (role === 'staff' && service && !['Bonafide', 'Transfer', 'Fee'].includes(service)) {
+    return res.status(400).json({ msg: 'invalid service' });
+  }
+
   // Create user object for JWT
   const user = {
     _id: username,
@@ -22,11 +27,11 @@ router.post('/login', (req, res) => {
     username: username,
     userId: userId,
     role: role,
-    service: null
+    service: service || null
   };
 
   const accessToken = jwt.sign(
-    { role: user.role, name: user.name, service: user.service || null },
+    { role: user.role, name: user.name, service: user.service },
     process.env.JWT_SECRET_KEY || 'super-secret-key',
     { subject: user._id }
   );

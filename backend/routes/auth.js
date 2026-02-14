@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
   };
 
   const accessToken = jwt.sign(
-    { role: user.role, service: user.service || null },
+    { role: user.role, name: user.name, service: user.service || null },
     process.env.JWT_SECRET_KEY || 'super-secret-key',
     { subject: user._id }
   );

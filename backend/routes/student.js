@@ -11,16 +11,12 @@ router.post('/generate-token', verifyJWT, roleRequired('student'), (req, res) =>
   }
 
   const studentId = req.user.sub;
-  const student = req.app.db.findUser({ _id: studentId });
-
-  if (!student) {
-    return res.status(404).json({ msg: 'student not found' });
-  }
+  const studentName = req.user.name || 'Unknown Student';
 
   const tokenNumber = getNextToken(req.app.db, service);
   const tokenDoc = {
     student_id: studentId,
-    student_name: student.name,
+    student_name: studentName,
     service,
     token_number: tokenNumber,
     status: 'Waiting',

@@ -28,7 +28,16 @@ app.db = new FileDatabase();
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', tokens: app.db.data.tokens.length });
+});
+
+// Debug endpoint - check database contents
+app.get('/debug/tokens', (req, res) => {
+  res.json({ 
+    token_count: app.db.data.tokens.length,
+    tokens: app.db.data.tokens,
+    db_file: require('path').join(__dirname, '..', 'data.json')
+  });
 });
 
 // Root route - serve login page

@@ -4,6 +4,8 @@ const crypto = require('crypto');
 
 const DB_FILE = path.join(__dirname, '..', 'data.json');
 
+console.log('Database file path:', DB_FILE);
+
 class FileDatabase {
   constructor() {
     this.data = {
@@ -18,12 +20,14 @@ class FileDatabase {
       if (fs.existsSync(DB_FILE)) {
         const content = fs.readFileSync(DB_FILE, 'utf8');
         this.data = JSON.parse(content);
+        console.log('Loaded database with', this.data.tokens.length, 'tokens');
       } else {
+        console.log('Database file does not exist, creating new one');
         this.data = { users: [], tokens: [] };
         this.saveToFile();
       }
     } catch (err) {
-      console.log('Creating new database file');
+      console.error('Error loading database:', err.message);
       this.data = { users: [], tokens: [] };
       this.saveToFile();
     }
@@ -31,9 +35,14 @@ class FileDatabase {
 
   saveToFile() {
     try {
+      const dir = path.dirname(DB_FILE);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
       fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2), 'utf8');
+      console.log('Database saved with', this.data.tokens.length, 'tokens');
     } catch (err) {
-      console.error('Error saving database:', err.message);
+      console.error('Error saving database to', DB_FILE, ':', err.message);
     }
   }
 

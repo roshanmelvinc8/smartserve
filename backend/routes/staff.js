@@ -6,15 +6,23 @@ const router = express.Router();
 router.get('/service-tokens', verifyJWT, roleRequired('staff'), (req, res) => {
   const service = req.user.service;
 
+  console.log('Staff requesting tokens for service:', service);
+
   if (!service) {
     return res.status(400).json({ msg: 'service not assigned. please login with a service' });
   }
+
+  const allTokens = req.app.db.data.tokens;
+  console.log('Total tokens in database:', allTokens.length);
+  console.log('All tokens:', allTokens);
 
   const tokens = req.app.db
     .findTokens({ service })
     .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-  res.json({ service, tokens });
+  console.log('Filtered tokens for service', service, ':', tokens.length);
+
+  res.json({ service, tokens, total_in_db: allTokens.length });
 });
 
 router.put('/update-status', verifyJWT, roleRequired('staff'), (req, res) => {
